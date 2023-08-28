@@ -1,0 +1,74 @@
+openapi: 3.0.3
+info:
+  title: Calculator
+  description: |-
+    This is a calculator microservice rest API specification.
+  contact:
+    email: feguiluzgomez@icloud.com
+  version: '1.0'
+servers:
+  - url: http://localhost:8080/calculator/v1
+tags:
+  - name: calculate
+    description: Solve your arithmetic operation
+paths:
+  /calculate:
+    get:
+      tags:
+        - calculate
+      summary: Solve your arithmetic operation
+      description: Three parameters are required. The first two refer to the operands of the operation, while the third refer to the type of operation (addition, subtraction...).
+      operationId: calculate
+      parameters:
+        - name: firstOperand
+          in: query
+          description: First operand of the arithmetic operation.
+          required: true
+          schema:
+            type: number
+        - name: secondOperand
+          in: query
+          description: Second operand of the arithmetic operation.
+          required: true
+          schema:
+            type: number
+        - name: operation
+          in: query
+          description: Arithmetic operation type.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+        '400':
+          description: Invalid parameter value
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResult'
+components:
+  schemas:
+    OperationResult:
+      type: object
+      properties:
+        resultValue:
+          type: number
+          nullable: true
+        resultCode:
+          type: integer
+          format: int32
+          nullable: false
+        resultMessage:
+          type: string
+          nullable: false
