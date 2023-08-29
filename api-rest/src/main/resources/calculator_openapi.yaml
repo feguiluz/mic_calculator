@@ -7,12 +7,16 @@ info:
     email: feguiluzgomez@icloud.com
   version: '1.0'
 servers:
-  - url: http://localhost:8080/calculator/v1
+  - description: Local server
+    url: '{server}'
+    variables:
+      server:
+        default: 'http://localhost:8080'
 tags:
   - name: calculate
     description: Solve your arithmetic operation
 paths:
-  /calculate:
+  /calculator/v1/calculate:
     get:
       tags:
         - calculate
@@ -64,7 +68,7 @@ components:
       properties:
         resultValue:
           type: number
-          nullable: true
+          nullable: false
         resultCode:
           type: integer
           format: int32
