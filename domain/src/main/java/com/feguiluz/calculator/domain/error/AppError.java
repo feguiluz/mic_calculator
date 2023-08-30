@@ -8,4 +8,9 @@ public record AppError(Integer code, String message) implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
+    @Override
+    public String toString() {
+        return message();
+    }
+
 }
