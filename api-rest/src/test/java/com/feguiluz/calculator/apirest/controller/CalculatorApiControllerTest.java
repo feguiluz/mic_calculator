@@ -1,11 +1,15 @@
 package com.feguiluz.calculator.apirest.controller;
 
 import com.feguiluz.calculator.domain.exception.CalculatorException;
+
+import io.corp.calculator.TracerImpl;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
@@ -17,11 +21,14 @@ class CalculatorApiControllerTest {
     private static final BigDecimal SECOND_OPERAND = BigDecimal.valueOf(3.8f);
     private static final String ADD_OPERATION = "add";
 
+    @Mock
+    private TracerImpl tracer;
+
     private CalculatorApiController controller;
 
     @BeforeEach
     void setUp() {
-        this.controller = new CalculatorApiController();
+        this.controller = new CalculatorApiController(tracer);
     }
 
     @Test
