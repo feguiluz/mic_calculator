@@ -3,8 +3,6 @@ package com.feguiluz.calculator.domain.mapper;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.springframework.http.HttpStatus;
-
 import com.feguiluz.calculator.domain.entity.OperationType;
 
 public class OperationTypeMapOperator {

@@ -1,17 +1,14 @@
 package com.feguiluz.calculator.apirest.controller;
 
-import com.feguiluz.calculator.domain.exception.CalculatorException;
 import com.feguiluz.calculator.domain.usecases.OperationDispatcherUseCase;
 import com.feguiluz.openapi.model.OperationResult;
 
 import io.corp.calculator.TracerImpl;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -23,7 +20,9 @@ import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static org.mockito.ArgumentMatchers.notNull;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class CalculatorApiControllerTest {
@@ -50,7 +49,7 @@ class CalculatorApiControllerTest {
     @DisplayName("Given operands and operation when calculate method is called then exception is thrown")
     void given_operands_and_operation_when_calculate_method_is_called_then_exception_is_thrown() {
 
-        Mockito.when(operationDispatcherUseCase.execute(ArgumentMatchers.any())).thenReturn(FIRST_OPERAND);
+        when(operationDispatcherUseCase.execute(any())).thenReturn(FIRST_OPERAND);
 
         final ResponseEntity<OperationResult> result = controller.calculate(ADD_OPERATION, OPERANDS);
 
@@ -58,7 +57,7 @@ class CalculatorApiControllerTest {
         assertThat(result.getStatusCode().is2xxSuccessful(), is(true));
         assertThat(result.getBody().getResultValue(), is(equalTo(FIRST_OPERAND)));
 
-        Mockito.verify(operationDispatcherUseCase, Mockito.times(1)).execute(ArgumentMatchers.any());
+        verify(operationDispatcherUseCase, Mockito.times(1)).execute(any());
     }
 
 }
