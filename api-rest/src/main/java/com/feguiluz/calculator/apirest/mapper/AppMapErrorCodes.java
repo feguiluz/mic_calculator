@@ -14,8 +14,10 @@ public class AppMapErrorCodes {
     public static final Map<Integer, HttpStatus> errorMappings = new HashMap<>();
 
     static {
+        errorMappings.put(AppErrorCode.SUCCESSFUL.code(), HttpStatus.OK);
         errorMappings.put(AppErrorCode.INVALID_REQUEST_ERROR.code(), HttpStatus.BAD_REQUEST);
-        errorMappings.put(AppErrorCode.INTERNAL_ERROR.code(), HttpStatus.INTERNAL_SERVER_ERROR);
+        errorMappings.put(AppErrorCode.INTERNAL_SERVER_ERROR.code(), HttpStatus.INTERNAL_SERVER_ERROR);
+        errorMappings.put(AppErrorCode.NOT_IMPLEMENTED_ERROR.code(), HttpStatus.NOT_IMPLEMENTED);
     }
 
 }

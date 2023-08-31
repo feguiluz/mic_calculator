@@ -23,8 +23,8 @@ public class RestExceptionHandler {
 
     @ExceptionHandler(CalculatorException.class)
     public ResponseEntity<OperationResult> handleError(final CalculatorException ex) {
-        tracer.trace(ex.getAppError());
         final OperationResult operationResult = buildResultError(ex.getAppError());
+        tracer.trace(operationResult.getResultMessage());
         return ResponseEntity.status(AppMapErrorCodes.errorMappings.get(operationResult.getResultCode())).body(operationResult);
     }
 
@@ -39,6 +39,13 @@ public class RestExceptionHandler {
     public ResponseEntity<OperationResult> handleError(final MissingServletRequestParameterException ex) {
         tracer.trace(AppErrorCode.INVALID_REQUEST_ERROR.message());
         final OperationResult operationResult = buildResultError(AppErrorCode.INVALID_REQUEST_ERROR);
+        return ResponseEntity.status(AppMapErrorCodes.errorMappings.get(operationResult.getResultCode())).body(operationResult);
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<OperationResult> handleError(final Exception ex) {
+        tracer.trace(AppErrorCode.INTERNAL_SERVER_ERROR.message());
+        final OperationResult operationResult = buildResultError(AppErrorCode.INTERNAL_SERVER_ERROR);
         return ResponseEntity.status(AppMapErrorCodes.errorMappings.get(operationResult.getResultCode())).body(operationResult);
     }
 
