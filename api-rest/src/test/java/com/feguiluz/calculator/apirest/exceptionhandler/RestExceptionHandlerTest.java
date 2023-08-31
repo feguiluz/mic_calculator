@@ -40,11 +40,6 @@ class RestExceptionHandlerTest {
         final ResponseEntity<OperationResult> result = restExceptionHandler.handleError(new CalculatorException(AppErrorCode.INVALID_REQUEST_ERROR));
 
         asserts(result);
-
-        assertAll(
-                () -> assertThat(result.getStatusCode().is4xxClientError(), is(Boolean.TRUE)),
-                () -> assertThat(result.getBody().getResultMessage(), is(equalTo(AppErrorCode.INVALID_REQUEST_ERROR.message()))),
-                () -> assertThat(result.getBody().getResultCode(), is(equalTo(AppErrorCode.INVALID_REQUEST_ERROR.code()))));
     }
 
     @Test
@@ -73,6 +68,20 @@ class RestExceptionHandlerTest {
                 () -> assertThat(result.getStatusCode().is4xxClientError(), is(Boolean.TRUE)),
                 () -> assertThat(result.getBody().getResultMessage(), is(equalTo(AppErrorCode.INVALID_REQUEST_ERROR.message()))),
                 () -> assertThat(result.getBody().getResultCode(), is(equalTo(AppErrorCode.INVALID_REQUEST_ERROR.code()))));
+    }
+
+    @Test
+    @DisplayName("Given a Exception when handle error is called then error response entity is returned")
+    void given_a_exception_when_handle_error_is_called_then_error_response_entity_is_returned() {
+
+        final ResponseEntity<OperationResult> result = restExceptionHandler.handleError(new Exception());
+
+        asserts(result);
+
+        assertAll(
+                () -> assertThat(result.getStatusCode().is5xxServerError(), is(Boolean.TRUE)),
+                () -> assertThat(result.getBody().getResultMessage(), is(equalTo(AppErrorCode.INTERNAL_SERVER_ERROR.message()))),
+                () -> assertThat(result.getBody().getResultCode(), is(equalTo(AppErrorCode.INTERNAL_SERVER_ERROR.code()))));
     }
 
     private void asserts(final ResponseEntity<OperationResult> result) {

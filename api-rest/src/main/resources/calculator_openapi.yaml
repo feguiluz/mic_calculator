@@ -24,24 +24,22 @@ paths:
       description: Three parameters are required. The first two refer to the operands of the operation, while the third refer to the type of operation (addition, subtraction...).
       operationId: calculate
       parameters:
-        - name: firstOperand
-          in: query
-          description: First operand of the arithmetic operation.
-          required: true
-          schema:
-            type: number
-        - name: secondOperand
-          in: query
-          description: Second operand of the arithmetic operation.
-          required: true
-          schema:
-            type: number
-        - name: operation
+        - name: operationType
           in: query
           description: Arithmetic operation type.
           required: true
           schema:
             type: string
+        - name: operands
+          in: query
+          description: Operand array of the arithmetic operation.
+          required: true
+          schema:
+            type: array
+            items:
+              type: number
+          style: form
+          explode: false
       responses:
         '200':
           description: successful operation
